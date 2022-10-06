@@ -4,7 +4,6 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import ProductApi from '../../api/productApi';
 import httpService from 'src/app/utils/httpconfig';
 
 @Component({
@@ -29,8 +28,8 @@ export class DashbroadComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const test = this.getProduct();
-    test.subscribe((data) => this.handleData(data.data.products));
+    const listProduct = this.getProduct();
+    listProduct.subscribe((data) => this.handleData(data.data.products));
   }
 
   handleData(data: any[]) {
