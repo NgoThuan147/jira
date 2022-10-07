@@ -1,0 +1,156 @@
+<nz-page-header class="site-page-header" nzBackIcon>
+    <nz-page-header-title>{{res.name}}</nz-page-header-title>
+    <nz-page-header-subtitle>{{res.select_space}}</nz-page-header-subtitle>
+    <nz-page-header-extra>
+        <button nz-button nzType="primary" nzShape="round" (click)="showModal()">Tạo Todo</button>
+    </nz-page-header-extra>
+    <nz-page-header-content>
+        <div class="jira">
+            <div class="example-container">
+                <h2>BACKLOG</h2>
+
+                <div cdkDropList #pendingList="cdkDropList" [cdkDropListData]="todo"
+                    [cdkDropListConnectedTo]="[doneList,reviewList]" class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of todo" cdkDrag (click)="handleClick()">
+                        <h3 class="example-box__title">{{item.name}}</h3>
+                        <div class="example-box__content">
+                            <div class="example-box__content__left">
+                                <div class="img">
+                                    <img src="https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1592405732/captain_e8s9nk.jpg"
+                                        alt="avatar">
+                                </div>
+                                <p>{{item.subDescribe}}</p>
+                            </div>
+                            <div class="example-box__content__right">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    style="width: 20px; height: 20px; fill: currentcolor;">
+                                    <use xlink:href="https://jira.trungk18.com/project/board#arrow-up"></use>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h2>IN PROGRESS</h2>
+
+                <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="inProgress"
+                    [cdkDropListConnectedTo]="[pendingList,reviewList]" class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of inProgress" cdkDrag>
+                        <h3 class="example-box__title">{{item.name}}</h3>
+                        <div class="example-box__content">
+                            <div class="example-box__content__left">
+                                <div class="img">
+                                    <img src="https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1592405732/captain_e8s9nk.jpg"
+                                        alt="avatar">
+                                </div>
+                                <p>STORY-2022</p>
+                            </div>
+                            <div class="example-box__content__right">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    style="width: 20px; height: 20px; fill: currentcolor;">
+                                    <use xlink:href="https://jira.trungk18.com/project/board#arrow-up"></use>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h2>DONE</h2>
+
+                <div cdkDropList #reviewList="cdkDropList" [cdkDropListData]="done"
+                    [cdkDropListConnectedTo]="[doneList,pendingList]" class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of done" cdkDrag>
+                        <h3 class="example-box__title">{{item.name}}</h3>
+                        <div class="example-box__content">
+                            <div class="example-box__content__left">
+                                <div class="img">
+                                    <img src="https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1592405732/captain_e8s9nk.jpg"
+                                        alt="avatar">
+                                </div>
+                                <p>STORY-2022</p>
+                            </div>
+                            <div class="example-box__content__right">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    style="width: 20px; height: 20px; fill: currentcolor;">
+                                    <use xlink:href="https://jira.trungk18.com/project/board#arrow-up"></use>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nz-page-header-content>
+</nz-page-header>
+
+
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Tạo Todo" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+    [nzFooter]="null">
+    <ng-container *nzModalContent>
+        <nz-spin [nzSpinning]="isOkLoading">
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                <nz-form-item>
+                    <nz-form-label nzFor="subDescribe" [nzSm]="6" [nzXs]="24" nzRequired>Vấn đề
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
+                        <nz-select name="subDescribe" formControlName="subDescribe">
+                            <nz-option nzValue="BUG" nzLabel="BUG"></nz-option>
+                            <nz-option nzValue="STORY" nzLabel="STORY"></nz-option>
+                            <nz-option nzValue="TASK" nzLabel="TASK"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="priority" [nzSm]="6" [nzXs]="24" nzRequired>Độ ưu tiên
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
+                        <nz-select name="priority" formControlName="priority">
+                            <nz-option nzValue="LOW" nzLabel="LOW"></nz-option>
+                            <nz-option nzValue="MEDIUM" nzLabel="MEDIUM"></nz-option>
+                            <nz-option nzValue="HIGH" nzLabel="HIGH"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="assignees" [nzSm]="6" [nzXs]="24">Thành viên
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <nz-select name="assignees" formControlName="assignees" nzMode="multiple" [(ngModel)]="listOfSelectedAssignees">
+                            <nz-option *ngFor="let item of res.list_user" [nzLabel]="item" [nzValue]="item"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>
+                        <span>Tên công việc</span>
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
+                        <input nz-input id="name" formControlName="name" />
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24">Mô tả công việc</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
+                        <angular-editor formControlName="describe" [config]="config"></angular-editor>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item nz-row class="register-area">
+                    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                        <button nz-button nzType="primary">Tạo bảng</button>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </nz-spin>
+    </ng-container>
+</nz-modal>

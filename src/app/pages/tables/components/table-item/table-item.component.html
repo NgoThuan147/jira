@@ -1,6 +1,8 @@
 <nz-card style="width:300px;" [nzCover]="coverTemplate" [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
-    <nz-card-meta [nzTitle]="title" nzDescription="This is the description" [nzAvatar]="avatarTemplate">
-    </nz-card-meta>
+    <a [routerLink]="'/table-detail/' + tableId" routerLinkActive="active" ariaCurrentWhenActive="page">
+        <nz-card-meta [nzTitle]="title" [nzDescription]="tableId" [nzAvatar]="avatarTemplate">
+        </nz-card-meta>
+    </a>
 </nz-card>
 <ng-template #avatarTemplate>
     <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>

@@ -1,0 +1,54 @@
+//color
+$primary_color: #FFA216;
+$secondary_color: #0887FC;
+$color_light: #fff;
+$color_dark: #000;
+$color_orange: #FF9900;
+$color_yellow: #ECB800;
+$color_yellow_light: #F9E372;
+$color_green: #33B892;
+$color_green_dark: #0C661A;
+$color_green_light: #D2FFD9;
+$color_violet: #A28AFF;
+$color_border: #E1E1E1;
+$color_border_2: #D7D7D7;
+$color_bg_blue: #EAF1FD;
+$color_bg_gray: #B9BDC5;
+$color_red: #CD0000;
+$bg_body: #F2F2F7;
+$color_blue: #2F74EB;
+$color_gray: rgba(124, 124, 124, 0.7);
+
+$primary_color_txt: #1A2625;
+$secondary_color_txt: #16243D;
+$third_color_txt: #737C8B;
+$color_red_txt: #EB5757;
+$color_green_txt: #1AA754;
+$color_blue_txt: #1488C8;
+$color_nav_txt: #455064;
+$color_nav_border: #F5F7FA;
+$color_line_boder: #C4C4C4;
+$color_line_blue: #53B7CF;
+
+$color_white: #fff;
+
+
+$color_green_btn: #61A850;
+$color_blue_btn: #008BD6;
+$color_yellow_btn: #FFA14A;
+//Font family
+$font_primary: 'Roboto', sans-serif;
+
+//font size normal
+$font_size_text_normal: 16px;
+$line_height_primary: 1.3;
+
+
+// responsive break-point
+$breakpoints: (
+  'small': (max-width: 575px),
+  'medium': (max-width: 767px),
+  'large': (max-width: 991px),
+  'x-large': (max-width: 1199px),
+  'xx-large': (max-width: 1399px)
+) !default;

@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "dashboard": "Tổng quan",
+    "plan": "Kế hoạch",
+    "plan_year": "Kế hoạch năm",
+    "plan_month": "Kế hoạch tháng",
+    "plan_day": "Kế hoạch ngày",
+    "plan_add": "Kế hoạch bổ sung",
+    "balance_production": "Cân đối năng lực sản xuất",
+    "balance_capacity": "Tổng hợp cân đối năng lực",
+    "transfer_request": "Yêu cầu luân chuyển",
+    "supplies_level": "Cấp vật tư",
+    "production": "Sản xuất",
+    "follow_production": "Theo dõi sản xuất",
+    "order_production": "Lệnh sản xuất",
+    "factory": "Phân xưởng",
+    "team_production": "Tổ sản xuất",
+    "procedure": "Quy trình",
+    "product": "Sản phẩm",
+    "suppliers": "Vật tư",
+    "nguyencong": "Nguyên công",
+    "asset_management": "Quản lý tài sản",
+    "report": "Báo cáo",
+    "user": "Người dùng hệ thống",
+    "category": "Danh mục",
+    "category_product": "Danh mục sản phẩm",
+    "category_machine": "Danh mục máy",
+    "category_factory": "Danh mục phân xưởng",
+    "category_labor": "Danh mục nhân công",
+    "category_customer": "Danh mục khách hàng",
+    "category_warehouse": "Danh mục kho hàng"
+  }
+}

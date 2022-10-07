@@ -1,4 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@import './assets/scss/commons/variables';
+@import './assets/scss/commons/mixins';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import './assets/scss/commons/general';
+@import './assets/scss/commons/font-icons';
+@import './assets/scss/commons/grid';
+@import './assets/scss/commons/spacing';
+@import './assets/scss/commons/elements';
+@import './assets/scss/commons/colors';
+@import './assets/scss/commons/transition';
+@import './assets/scss/commons/aspect-ratio';
+@import "assets/scss/commons/button";
+
+@import './assets/scss/custom-ui/modal';
+@import './assets/scss/custom-ui/form';
+@import './assets/scss/custom-ui/editor';
+
+

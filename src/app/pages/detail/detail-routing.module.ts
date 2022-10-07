@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashbroadComponent } from './view/dashbroad/dashbroad.component';
+import { ProductsComponent } from './view/products/products.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', component: DashbroadComponent }
+      { path: ':id', component: ProductsComponent }
     ]
   }
 ];
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HomeRoutingModule { }
+export class DetailRoutingModule { }

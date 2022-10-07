@@ -2,15 +2,59 @@
     <nz-page-header-title>CÁC KHÔNG GIAN LÀM VIỆC CỦA BẠN</nz-page-header-title>
     <nz-page-header-subtitle>This is a subtitle</nz-page-header-subtitle>
     <nz-page-header-extra>
-        <button *nzSpaceItem nz-button>Operation</button>
-        <button *nzSpaceItem nz-button>Operation</button>
-        <button *nzSpaceItem nz-button nzType="primary">Primary</button>
+        <button nz-button nzType="primary" nzShape="round" (click)="showModal()">Tạo bảng</button>
     </nz-page-header-extra>
     <nz-page-header-content>
         <div class="table-list">
             <div class="table-list__item" *ngFor="let item of listTable">
-                <app-table-item [title]="item"></app-table-item>
+                <app-table-item [title]="item.name" [tableId]="item.id"></app-table-item>
             </div>
         </div>
     </nz-page-header-content>
 </nz-page-header>
+
+<nz-modal [(nzVisible)]="isModal" nzTitle="Hãy xây dựng một Không gian làm việc" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()" [nzFooter]="null">
+    <ng-container *nzModalContent>
+        <nz-spin [nzSpinning]="isOkLoading">
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired
+                        nzTooltipTitle="Đây là tên của công ty, nhóm hoặc tổ chức của bạn.">
+                        <span>Tên Không gian làm việc</span>
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
+                        <input nz-input id="name" formControlName="name" />
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="selectSpace" [nzSm]="6" [nzXs]="24" nzRequired>Loại Không gian làm việc
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
+                        <nz-select name="selectSpace" formControlName="selectSpace" [ngModel]="">
+                            <nz-option nzValue="Marketing" nzLabel="Marketing"></nz-option>
+                            <nz-option nzValue="Doanh nghiệp nhỏ" nzLabel="Doanh nghiệp nhỏ"></nz-option>
+                            <nz-option nzValue="Kỹ Thuật-CNTT" nzLabel="Kỹ Thuật-CNTT"></nz-option>
+                            <nz-option nzValue="Nhân sự" nzLabel="Nhân sự"></nz-option>
+                            <nz-option nzValue="Kinh doanh CRM" nzLabel="Kinh doanh CRM"></nz-option>
+                            <nz-option nzValue="Giáo dục" nzLabel="Giáo dục"></nz-option>
+                            <nz-option nzValue="Điều hành" nzLabel="Điều hành"></nz-option>
+                            <nz-option nzValue="Khác" nzLabel="Khác"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Mô tả Không gian làm việc</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
+                        <textarea formControlName="comments" nz-input rows="4"></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item nz-row class="register-area">
+                    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                        <button nz-button nzType="primary">Tạo bảng</button>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </nz-spin>
+    </ng-container>
+</nz-modal>

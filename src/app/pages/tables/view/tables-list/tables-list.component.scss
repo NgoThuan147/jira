@@ -1,4 +1,17 @@
 .table-list {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+[nz-form] {
+  max-width: 600px;
+}
+
+.phone-select {
+  width: 70px;
+}
+
+.register-are {
+  margin-bottom: 8px;
 }

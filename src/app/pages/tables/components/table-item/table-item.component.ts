@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TableItemComponent implements OnInit {
   @Input() title!: string;
+  @Input() tableId!: string;
 
   constructor() { }
 
