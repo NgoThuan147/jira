@@ -26,52 +26,17 @@ export class ProductsComponent implements OnInit {
   isOkLoading = false;
   paramId: string = '';
   res: any = {};
-  isVisible = false;
+  isVisibleCreate = false;
   todo: any[] = [];
   inProgress: any[] = [];
   done: any[] = [];
-  validateForm!: any;
   listOfSelectedAssignees = []
-
-  config: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: '15rem',
-    minHeight: '5rem',
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    defaultParagraphSeparator: 'p',
-    defaultFontName: 'Arial',
-    toolbarHiddenButtons: [['bold']],
-    customClasses: [
-      {
-        name: 'quote',
-        class: 'quote',
-      },
-      {
-        name: 'redText',
-        class: 'redText',
-      },
-      {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
-      },
-    ],
-  };
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((paramsId) => {
       this.paramId = paramsId.id;
     });
     this.getProduct();
-
-    this.validateForm = this.fb.group({
-      name: [null, [Validators.required]],
-      subDescribe: [null, [Validators.required]],
-      priority: [null, [Validators.required]],
-      describe: [null]
-    });
   }
 
   handleData(data: any) {
@@ -86,13 +51,6 @@ export class ProductsComponent implements OnInit {
         return this.done.push(item);
       }
     });
-  }
-
-  get myTodo() {
-    return this.todo;
-  }
-  set myTodo(value) {
-    console.log('value', value);
   }
 
   getProduct() {
@@ -125,55 +83,25 @@ export class ProductsComponent implements OnInit {
   }
 
   showModal(): void {
-    this.isVisible = true;
-  }
-
-  handleOk(): void {
-    this.isVisible = false;
+    this.isVisibleCreate = true;
   }
 
   handleCancel(): void {
-    this.isVisible = false;
+    this.isVisibleCreate = false;
   }
 
-  submitForm(): void {
-    if (this.validateForm.valid) {
-      const create = this.http.post('products/create', { 
-        ...this.validateForm.value, 
-        assignees: this.listOfSelectedAssignees, 
-        status: 'Backlog', table_id: this.paramId 
-      })
-      create.subscribe((res) => {
-        if (res.data) {
-          this.isVisible = false;
-          this.noti.create('success', 'Tạo bảng thành công!', '');
-          this.todo.push({ ...res.data })
-        }
-      })
 
-    } else {
-      Object.values(this.validateForm.controls).forEach((control: any) => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
-    }
+  // Edit
+  isVisibleEdit: boolean = false;
+  valueItem: any = {}
+  
+  handleCancelEdit(): void {
+    this.isVisibleEdit = false;
   }
 
-  updateConfirmValidator(): void {
-    /** wait for refresh value */
-    Promise.resolve().then(() =>
-      this.validateForm.controls.checkPassword.updateValueAndValidity()
-    );
+  handleClickEdit(item: any) {
+    this.isVisibleEdit = true;
+    this.valueItem = item;
+    console.log(this.valueItem)
   }
-
-  confirmationValidator = (control: any): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
-    }
-    return {};
-  };
 }

@@ -9,12 +9,16 @@ import { DemoNgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { DetailCreateComponent } from './components/detail-create/detail-create.component';
+import { DetailEditComponent } from './components/detail-edit/detail-edit.component';
 
 
 
 @NgModule({
   declarations: [
-    ProductsComponent
+    ProductsComponent,
+    DetailCreateComponent,
+    DetailEditComponent
   ],
   imports: [
     CommonModule,

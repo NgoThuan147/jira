@@ -12,7 +12,7 @@
                 <div cdkDropList #pendingList="cdkDropList" [cdkDropListData]="todo"
                     [cdkDropListConnectedTo]="[doneList,reviewList]" class="example-list"
                     (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let item of todo" cdkDrag (click)="handleClick()">
+                    <div class="example-box" *ngFor="let item of todo" cdkDrag (click)="handleClickEdit(item)">
                         <h3 class="example-box__title">{{item.name}}</h3>
                         <div class="example-box__content">
                             <div class="example-box__content__left">
@@ -93,64 +93,8 @@
     </nz-page-header-content>
 </nz-page-header>
 
+<app-detail-create [paramId]="paramId" [isVisible]="isVisibleCreate" [todo]="todo" [isOkLoading]="isOkLoading"
+    [res]="res" (handleCancelEmit)="isVisibleCreate = false"></app-detail-create>
 
-
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Tạo Todo" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
-    [nzFooter]="null">
-    <ng-container *nzModalContent>
-        <nz-spin [nzSpinning]="isOkLoading">
-            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-                <nz-form-item>
-                    <nz-form-label nzFor="subDescribe" [nzSm]="6" [nzXs]="24" nzRequired>Vấn đề
-                    </nz-form-label>
-                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
-                        <nz-select name="subDescribe" formControlName="subDescribe">
-                            <nz-option nzValue="BUG" nzLabel="BUG"></nz-option>
-                            <nz-option nzValue="STORY" nzLabel="STORY"></nz-option>
-                            <nz-option nzValue="TASK" nzLabel="TASK"></nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label nzFor="priority" [nzSm]="6" [nzXs]="24" nzRequired>Độ ưu tiên
-                    </nz-form-label>
-                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
-                        <nz-select name="priority" formControlName="priority">
-                            <nz-option nzValue="LOW" nzLabel="LOW"></nz-option>
-                            <nz-option nzValue="MEDIUM" nzLabel="MEDIUM"></nz-option>
-                            <nz-option nzValue="HIGH" nzLabel="HIGH"></nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label nzFor="assignees" [nzSm]="6" [nzXs]="24">Thành viên
-                    </nz-form-label>
-                    <nz-form-control [nzSm]="14" [nzXs]="24">
-                        <nz-select name="assignees" formControlName="assignees" nzMode="multiple" [(ngModel)]="listOfSelectedAssignees">
-                            <nz-option *ngFor="let item of res.list_user" [nzLabel]="item" [nzValue]="item"></nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>
-                        <span>Tên công việc</span>
-                    </nz-form-label>
-                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
-                        <input nz-input id="name" formControlName="name" />
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label [nzSm]="6" [nzXs]="24">Mô tả công việc</nz-form-label>
-                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Vui lòng nhập trường này!">
-                        <angular-editor formControlName="describe" [config]="config"></angular-editor>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item nz-row class="register-area">
-                    <nz-form-control [nzSpan]="14" [nzOffset]="6">
-                        <button nz-button nzType="primary">Tạo bảng</button>
-                    </nz-form-control>
-                </nz-form-item>
-            </form>
-        </nz-spin>
-    </ng-container>
-</nz-modal>
+<app-detail-edit *ngIf="isVisibleEdit" [isVisibleEdit]="isVisibleEdit" (handleCancelEmit)="this.isVisibleEdit = false"
+    [valueItem]="valueItem"></app-detail-edit>

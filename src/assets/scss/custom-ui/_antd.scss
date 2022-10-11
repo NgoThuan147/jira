@@ -1,0 +1,37 @@
+.ant-select {
+    width: 100%;
+}
+
+.select-border-none {
+    .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        border: none;
+    }
+
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        border: none;
+    }
+
+    .ant-select-show-search.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        border: none;
+    }
+}
+
+.select-fw-bold {
+    .ant-select {
+        font-weight: bold;
+    }
+}
+
+.select-bg {
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        background: #f4f5f7;
+    }
+}
+
+.input-border-none {
+    .ant-input {
+        border: none;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+}

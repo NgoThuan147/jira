@@ -1,0 +1,72 @@
+<nz-modal [(nzVisible)]="isVisibleEdit" (nzOnCancel)="handleCancel()" [nzFooter]="null">
+    <ng-container *nzModalContent>
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+            <div class="detail-edit">
+                <div class="content">
+                    <div class="content__label select-border-none select-fw-bold">
+                        <nz-select name="subDescribe" formControlName="subDescribe">
+                            <nz-option nzValue="BUG" nzLabel="BUG"></nz-option>
+                            <nz-option nzValue="STORY" nzLabel="STORY"></nz-option>
+                            <nz-option nzValue="TASK" nzLabel="TASK"></nz-option>
+                        </nz-select>
+                    </div>
+                    <div class="content__title input-border-none">
+                        <input nz-input id="name" formControlName="name" />
+                    </div>
+                    <div class="content__description">
+                        <p>Description</p>
+                        <div *ngIf="!isEditDescribe" [innerHTML]="contentDescribe" (click)="isEditDescribe = true">
+                        </div>
+                        <div *ngIf="isEditDescribe">
+                            <angular-editor formControlName="describe" [config]="config">
+                            </angular-editor>
+                            <div class="content__description__btn">
+                                <button nz-button nzType="primary" (click)="handleClickSaveContent()">Save</button>
+                                <button nz-button (click)="isEditDescribe = false">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="info__status select-bg select-border-none">
+                        <p>STATUS</p>
+                        <nz-select name="status" formControlName="status">
+                            <nz-option nzValue="Backlog" nzLabel="Back log"></nz-option>
+                            <nz-option nzValue="In Progress" nzLabel="In Progress"></nz-option>
+                            <nz-option nzValue="Done" nzLabel="Done"></nz-option>
+                        </nz-select>
+                    </div>
+                    <div class="info__reporter">
+                        <p>REPORTER</p>
+                        <div class="info__reporter__item">
+                            <p>{{valueItem.reporter}}</p>
+                        </div>
+                    </div>
+                    <div class="info__assignees select-border-none">
+                        <p>ASSIGNEES</p>
+                        <nz-select name="assignees" formControlName="assignees" nzMode="multiple"
+                            [(ngModel)]="valueItem.assignees">
+                            <nz-option *ngFor="let item of valueItem.assignees" [nzLabel]="item" [nzValue]="item">
+                            </nz-option>
+                        </nz-select>
+                    </div>
+                    <div class="info__priority select-bg select-border-none">
+                        <p>STATUS</p>
+                        <nz-select name="priority" formControlName="priority">
+                            <nz-option nzValue="LOW" nzLabel="LOW"></nz-option>
+                            <nz-option nzValue="MEDIUM" nzLabel="MEDIUM"></nz-option>
+                            <nz-option nzValue="HIGH" nzLabel="HIGH"></nz-option>
+                        </nz-select>
+                    </div>
+                    <div class="info__time">
+                        <p>Created - {{valueItem.created_at}}</p>
+                        <p>Updated - {{valueItem.updated_at}}</p>
+                    </div>
+                </div>
+                <button class="btn-remove">
+                    <i class="icon-bin"></i>
+                </button>
+            </div>
+        </form>
+    </ng-container>
+</nz-modal>
