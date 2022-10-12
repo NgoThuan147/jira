@@ -1,4 +1,4 @@
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Tạo Todo" [nzFooter]="null" (nzOnCancel)="handleCancel()">
+<nz-modal [nzWidth]="1000" [(nzVisible)]="isVisible" nzTitle="Tạo Todo" [nzFooter]="null" (nzOnCancel)="handleCancel()">
     <ng-container *nzModalContent>
         <nz-spin [nzSpinning]="isOkLoading">
             <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">

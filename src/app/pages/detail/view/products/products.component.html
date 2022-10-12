@@ -12,7 +12,7 @@
                 <div cdkDropList #pendingList="cdkDropList" [cdkDropListData]="todo"
                     [cdkDropListConnectedTo]="[doneList,reviewList]" class="example-list"
                     (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let item of todo" cdkDrag (click)="handleClickEdit(item)">
+                    <div class="example-box" *ngFor="let item of todo; index as i" cdkDrag (click)="handleClickEdit(item, 'todo', i)">
                         <h3 class="example-box__title">{{item.name}}</h3>
                         <div class="example-box__content">
                             <div class="example-box__content__left">
@@ -40,7 +40,7 @@
                 <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="inProgress"
                     [cdkDropListConnectedTo]="[pendingList,reviewList]" class="example-list"
                     (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let item of inProgress" cdkDrag>
+                    <div class="example-box" *ngFor="let item of inProgress; index as i" cdkDrag (click)="handleClickEdit(item, 'inProgress', i)">
                         <h3 class="example-box__title">{{item.name}}</h3>
                         <div class="example-box__content">
                             <div class="example-box__content__left">
@@ -48,7 +48,7 @@
                                     <img src="https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1592405732/captain_e8s9nk.jpg"
                                         alt="avatar">
                                 </div>
-                                <p>STORY-2022</p>
+                                <p>{{item.subDescribe}}</p>
                             </div>
                             <div class="example-box__content__right">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@
                 <div cdkDropList #reviewList="cdkDropList" [cdkDropListData]="done"
                     [cdkDropListConnectedTo]="[doneList,pendingList]" class="example-list"
                     (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let item of done" cdkDrag>
+                    <div class="example-box" *ngFor="let item of done; index as i" cdkDrag (click)="handleClickEdit(item, 'done', i)">
                         <h3 class="example-box__title">{{item.name}}</h3>
                         <div class="example-box__content">
                             <div class="example-box__content__left">
@@ -76,7 +76,7 @@
                                     <img src="https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1592405732/captain_e8s9nk.jpg"
                                         alt="avatar">
                                 </div>
-                                <p>STORY-2022</p>
+                                <p>{{item.subDescribe}}</p>
                             </div>
                             <div class="example-box__content__right">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +94,7 @@
 </nz-page-header>
 
 <app-detail-create [paramId]="paramId" [isVisible]="isVisibleCreate" [todo]="todo" [isOkLoading]="isOkLoading"
-    [res]="res" (handleCancelEmit)="isVisibleCreate = false"></app-detail-create>
+    [res]="res" (handleCancelEmit)="isVisibleCreate = false" (handleChangeCreateEmit)="handleChangeCreate($event)"></app-detail-create>
 
-<app-detail-edit *ngIf="isVisibleEdit" [isVisibleEdit]="isVisibleEdit" (handleCancelEmit)="this.isVisibleEdit = false"
-    [valueItem]="valueItem"></app-detail-edit>
+<app-detail-edit *ngIf="isVisibleEdit" [isVisibleEdit]="isVisibleEdit" (handleCancelEmit)="handleCancelEdit()"
+    [valueItem]="valueItem" (handleChangeItemStatusEmit)="handleChangeItemStatus($event)" (handleChangeRemoveEmit)="handleChangeRemove($event)"></app-detail-edit>

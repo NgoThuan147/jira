@@ -1,4 +1,4 @@
-<nz-modal [(nzVisible)]="isVisibleEdit" (nzOnCancel)="handleCancel()" [nzFooter]="null">
+<nz-modal [nzWidth]="1000" [(nzVisible)]="isVisibleEdit" (nzOnCancel)="handleCancel()" [nzFooter]="null">
     <ng-container *nzModalContent>
         <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
             <div class="detail-edit">
@@ -30,7 +30,7 @@
                 <div class="info">
                     <div class="info__status select-bg select-border-none">
                         <p>STATUS</p>
-                        <nz-select name="status" formControlName="status">
+                        <nz-select name="status" formControlName="status" [nzDisabled]="true">
                             <nz-option nzValue="Backlog" nzLabel="Back log"></nz-option>
                             <nz-option nzValue="In Progress" nzLabel="In Progress"></nz-option>
                             <nz-option nzValue="Done" nzLabel="Done"></nz-option>
@@ -63,7 +63,7 @@
                         <p>Updated - {{valueItem.updated_at}}</p>
                     </div>
                 </div>
-                <button class="btn-remove">
+                <button class="btn-remove" (click)="showDeleteConfirm()">
                     <i class="icon-bin"></i>
                 </button>
             </div>

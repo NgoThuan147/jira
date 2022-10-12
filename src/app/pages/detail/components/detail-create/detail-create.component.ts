@@ -16,6 +16,7 @@ export class DetailCreateComponent implements OnInit {
   @Input() isOkLoading!: boolean;
   @Input() res!: any;
   @Output() handleCancelEmit = new EventEmitter();
+  @Output() handleChangeCreateEmit = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
@@ -73,7 +74,8 @@ export class DetailCreateComponent implements OnInit {
         if (res.data) {
           this.handleCancel();
           this.noti.create('success', 'Tạo bảng thành công!', '');
-          this.todo.push({ ...res.data })
+          // this.todo.push({ ...res.data })
+          this.handleChangeCreateEmit.emit({ ...res.data })
         }
       })
 

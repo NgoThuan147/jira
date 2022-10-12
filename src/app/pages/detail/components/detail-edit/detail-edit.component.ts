@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import httpService from 'src/app/utils/httpconfig';
 
 @Component({
   selector: 'app-detail-edit',
@@ -16,9 +19,14 @@ export class DetailEditComponent implements OnInit {
     describe: '',
     assignees: [],
   };
+  @Output() handleChangeItemStatusEmit = new EventEmitter();
   @Output() handleCancelEmit = new EventEmitter();
+  @Output() handleChangeRemoveEmit = new EventEmitter();
   constructor(
     private fb: FormBuilder,
+    private modal: NzModalService,
+    private http: httpService,
+    private noti: NzNotificationService
   ) {}
 
   validateForm!: any;
@@ -65,7 +73,11 @@ export class DetailEditComponent implements OnInit {
 
   handleCancel() {
     this.handleCancelEmit.emit();
-    console.log(this.validateForm.value)
+    this.valueItem = {
+      ...this.valueItem,
+      ...this.validateForm.value
+    }
+    this.handleChangeItemStatusEmit.emit({ ...this.valueItem, describe: this.contentDescribe })
   }
 
   submitForm(): void {}
@@ -73,5 +85,18 @@ export class DetailEditComponent implements OnInit {
   handleClickSaveContent() {
     this.isEditDescribe = false;
     this.contentDescribe = this.validateForm.value.describe;
+  }
+
+  showDeleteConfirm(): void {
+    this.modal.confirm({
+      nzTitle: `Bạn có chắc chắn là muốn xóa <span style="color: red;">${this.valueItem.id}</span>?`,
+      nzContent: '',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => this.handleChangeRemoveEmit.emit(this.valueItem.id),
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
   }
 }
