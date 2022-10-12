@@ -7,6 +7,7 @@ import { retry, retryWhen, catchError, delay, take, map } from 'rxjs/operators';
 
 import { environment } from './../../environments/environment';
 import { getAccessToken } from './jwt';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 // import { getAccessToken } from './jwt';
 
@@ -22,7 +23,7 @@ export default class httpService {
   // Base url
   baseurl: string = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private nzNotificationService: NzNotificationService) { }
 
   // Http Headers
   httpOptions = {
@@ -130,6 +131,7 @@ export default class httpService {
   // Error handling
   errorHandle(error: { error: { message: string; }; status: any; message: any; }) {
     console.log('Err: ', error);
+    this.nzNotificationService.create('error', 'LỖI', error.error.message)
      let errorMessage = '';
      if(error.error instanceof ErrorEvent) {
        // Get client-side error
