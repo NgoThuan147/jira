@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/',
+  apiUrlImg: 'http://localhost:3000/img/',
   userInfoKey: 'uinfodev',
   userTokenKey: 'ungtkdev'
 };

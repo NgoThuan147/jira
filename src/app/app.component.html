@@ -1,6 +1,6 @@
 <nz-layout class="app-layout">
-  <nz-sider [class]="{'menu-sidebar': true, 'slider-none': !isLogin}" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
-    [nzTrigger]="null">
+  <nz-sider [class]="{'menu-sidebar': true, 'slider-none': !isLogin}" nzCollapsible nzWidth="256px" nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
@@ -18,10 +18,18 @@
   </nz-sider>
   <nz-layout [class]="{'header-none': !isLogin}">
     <nz-header>
-      <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+      <div style="padding: 24px;" class="app-header display-flex justify-content-between align-items-center">
+        <span class="font-size-20 cursor-pointer" (click)="isCollapsed = !isCollapsed">
           <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
         </span>
+        <ng-container>
+          <nz-avatar *ngIf="auth" nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomCenter" nzSize="large" nzIcon="user" [nzSrc]="environment.apiUrlImg + auth.avatar"></nz-avatar>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item (click)="logout()">Đăng Xuất</li>
+            </ul>
+          </nz-dropdown-menu>
+        </ng-container>
       </div>
     </nz-header>
     <nz-content>

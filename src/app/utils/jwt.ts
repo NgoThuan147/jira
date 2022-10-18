@@ -12,5 +12,6 @@ export const saveToken = (accessToken: string, exdays = 1) => {
 };
 export const destroyLogged = () => {
   TOKEN_KEY && delCookie(TOKEN_KEY);
+  delCookie('AUTH_JIRA');
   localStorage.clear();
 };

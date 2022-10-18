@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { getAccessToken } from './utils/jwt';
+import { environment } from 'src/environments/environment';
+import { getCookie } from './utils/helpers';
+import { destroyLogged, getAccessToken } from './utils/jwt';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +12,20 @@ import { getAccessToken } from './utils/jwt';
 export class AppComponent implements OnInit {
   isCollapsed = false;
   isLogin = false;
+  auth: any;
+  environment: any;
 
   constructor(private route: Router,) {
     
   }
 
   ngOnInit() {
+    this.environment = environment
     this.handleCheckLogin();
+    const authCookie = getCookie('AUTH_JIRA')
+    if (authCookie) {
+      this.auth = JSON.parse(authCookie)
+    }
   }
 
   handleCheckLogin() {
@@ -28,5 +37,11 @@ export class AppComponent implements OnInit {
       this.route.navigate(['login'])
       return this.isLogin = false;
     }
+  }
+
+  logout() {
+    this.isLogin = false;
+    destroyLogged();
+    this.route.navigate(['login']);
   }
 }

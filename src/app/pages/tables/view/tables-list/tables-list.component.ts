@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import httpService from 'src/app/utils/httpconfig';
 import { Validators, FormBuilder } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { saveCookie } from 'src/app/utils/helpers';
 
 @Component({
   selector: 'app-tables-list',
@@ -18,6 +19,7 @@ export class TablesListComponent implements OnInit {
   isModal = false;
   isOkLoading = false;
   listTable: any[] = [];
+  listTableGust: any[] = [];
   validateForm!: any;
 
   ngOnInit(): void {
@@ -32,9 +34,11 @@ export class TablesListComponent implements OnInit {
 
   getListTable() {
     const list = this.http.get(`auths/profile`);
-    return list.subscribe((data) =>
-      this.listTable.push(...JSON.parse(data.data.list_table))
-    );
+    return list.subscribe((data) => {
+      saveCookie({ name: 'AUTH_JIRA' , value: JSON.stringify(data.data), exdays: 1 });
+      this.listTable.push(...JSON.parse(data.data.list_table));
+      this.listTableGust.push(...JSON.parse(data.data.list_table_gust));
+    });
   }
 
   showModal(): void {
@@ -59,13 +63,16 @@ export class TablesListComponent implements OnInit {
   submitForm(): void {
     if (this.validateForm.valid) {
       this.isOkLoading = true;
-      const create = this.createTable({ ...this.validateForm.value, select_space: this.validateForm.value.selectSpace });
+      const create = this.createTable({
+        ...this.validateForm.value,
+        select_space: this.validateForm.value.selectSpace,
+      });
       create.subscribe((res) => {
         if (res.data) {
           this.noti.create('success', 'Tạo bảng thành công!', '');
           this.isOkLoading = false;
           this.isModal = false;
-          this.listTable.push({...res.data})
+          this.listTable.push({ ...res.data });
         }
       });
     } else {

@@ -17,6 +17,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MaterialExampleModule } from '../material.module';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { DemoNgZorroAntdModule } from 'src/app/ng-zorro-antd.module';
 
 registerLocaleData(en);
 
@@ -38,6 +39,7 @@ registerLocaleData(en);
     ReactiveFormsModule,
     AngularEditorModule,
     NzNotificationModule,
+    DemoNgZorroAntdModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

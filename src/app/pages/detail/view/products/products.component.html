@@ -1,7 +1,11 @@
 <nz-page-header class="site-page-header" nzBackIcon>
     <nz-page-header-title>{{res.name}}</nz-page-header-title>
     <nz-page-header-subtitle>{{res.select_space}}</nz-page-header-subtitle>
-    <nz-page-header-extra>
+    <nz-page-header-extra class="display-flex">
+        <button *ngIf="roomMaster" style="width: 32px; height: 32px" class="border-none outline-none border-rd-50 display-flex-center cursor-pointer"><i class="icon-user-plus"></i></button>
+        <nz-avatar-group>
+            <nz-avatar *ngFor="let item of listUser" nzIcon="user" [nzSrc]="environment.apiUrlImg + item.avatar" nz-tooltip [nzTooltipTitle]="item.name"></nz-avatar>
+        </nz-avatar-group>
         <button nz-button nzType="primary" nzShape="round" (click)="showModal()">Tạo Todo</button>
     </nz-page-header-extra>
     <nz-page-header-content>
@@ -12,7 +16,8 @@
                 <div cdkDropList #pendingList="cdkDropList" [cdkDropListData]="todo"
                     [cdkDropListConnectedTo]="[doneList,reviewList]" class="example-list"
                     (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let item of todo; index as i" cdkDrag (click)="handleClickEdit(item, 'todo', i)">
+                    <div class="example-box" *ngFor="let item of todo; index as i" cdkDrag
+                        (click)="handleClickEdit(item, 'todo', i)">
                         <h3 class="example-box__title">{{item.name}}</h3>
                         <div class="example-box__content">
                             <div class="example-box__content__left">
@@ -40,7 +45,8 @@
                 <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="inProgress"
                     [cdkDropListConnectedTo]="[pendingList,reviewList]" class="example-list"
                     (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let item of inProgress; index as i" cdkDrag (click)="handleClickEdit(item, 'inProgress', i)">
+                    <div class="example-box" *ngFor="let item of inProgress; index as i" cdkDrag
+                        (click)="handleClickEdit(item, 'inProgress', i)">
                         <h3 class="example-box__title">{{item.name}}</h3>
                         <div class="example-box__content">
                             <div class="example-box__content__left">
@@ -68,7 +74,8 @@
                 <div cdkDropList #reviewList="cdkDropList" [cdkDropListData]="done"
                     [cdkDropListConnectedTo]="[doneList,pendingList]" class="example-list"
                     (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let item of done; index as i" cdkDrag (click)="handleClickEdit(item, 'done', i)">
+                    <div class="example-box" *ngFor="let item of done; index as i" cdkDrag
+                        (click)="handleClickEdit(item, 'done', i)">
                         <h3 class="example-box__title">{{item.name}}</h3>
                         <div class="example-box__content">
                             <div class="example-box__content__left">
@@ -94,7 +101,9 @@
 </nz-page-header>
 
 <app-detail-create [paramId]="paramId" [isVisible]="isVisibleCreate" [todo]="todo" [isOkLoading]="isOkLoading"
-    [res]="res" (handleCancelEmit)="isVisibleCreate = false" (handleChangeCreateEmit)="handleChangeCreate($event)"></app-detail-create>
+    [res]="res" (handleCancelEmit)="isVisibleCreate = false" (handleChangeCreateEmit)="handleChangeCreate($event)">
+</app-detail-create>
 
 <app-detail-edit *ngIf="isVisibleEdit" [isVisibleEdit]="isVisibleEdit" (handleCancelEmit)="handleCancelEdit()"
-    [valueItem]="valueItem" (handleChangeItemStatusEmit)="handleChangeItemStatus($event)" (handleChangeRemoveEmit)="handleChangeRemove($event)"></app-detail-edit>
+    [valueItem]="valueItem" (handleChangeItemStatusEmit)="handleChangeItemStatus($event)"
+    (handleChangeRemoveEmit)="handleChangeRemove($event)"></app-detail-edit>

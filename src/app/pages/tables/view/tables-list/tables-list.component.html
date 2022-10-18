@@ -13,6 +13,18 @@
     </nz-page-header-content>
 </nz-page-header>
 
+<nz-page-header class="site-page-header" nzBackIcon>
+    <nz-page-header-title>CÁC KHÔNG GIAN LÀM VIỆC KHÁCH</nz-page-header-title>
+    <nz-page-header-subtitle>This is a subtitle</nz-page-header-subtitle>
+    <nz-page-header-content>
+        <div class="table-list">
+            <div class="table-list__item" *ngFor="let item of listTableGust">
+                <app-table-item [title]="item.name" [tableId]="item.id"></app-table-item>
+            </div>
+        </div>
+    </nz-page-header-content>
+</nz-page-header>
+
 <nz-modal [nzWidth]="1000" [(nzVisible)]="isModal" nzTitle="Hãy xây dựng một Không gian làm việc" (nzOnCancel)="handleCancel()"
     (nzOnOk)="handleOk()" [nzFooter]="null">
     <ng-container *nzModalContent>

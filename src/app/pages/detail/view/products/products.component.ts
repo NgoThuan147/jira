@@ -11,6 +11,8 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import httpService from 'src/app/utils/httpconfig';
 import { io, Socket } from 'socket.io-client';
 import { getAccessToken } from 'src/app/utils/jwt';
+import { environment } from 'src/environments/environment';
+import { getCookie } from 'src/app/utils/helpers';
 
 @Component({
   selector: 'app-products',
@@ -23,21 +25,25 @@ export class ProductsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private noti: NzNotificationService
-  ) {}
-
-  isOkLoading = false;
-  paramId: string = '';
-  res: any = {};
-  isVisibleCreate = false;
-  todo: any[] = [];
-  inProgress: any[] = [];
-  done: any[] = [];
-  listOfSelectedAssignees = [];
-  statusEdit: string = '';
-  indexEdit: number = 0;
-  socket!: Socket;
+    ) {}
+    
+    isOkLoading = false;
+    paramId: string = '';
+    res: any = {};
+    isVisibleCreate = false;
+    todo: any[] = [];
+    inProgress: any[] = [];
+    done: any[] = [];
+    listOfSelectedAssignees = [];
+    statusEdit: string = '';
+    indexEdit: number = 0;
+    socket!: Socket;
+    listUser: any[] = [];
+    environment: any;
+    roomMaster: boolean = false;
 
   ngOnInit() {
+    this.environment = environment
     this.activatedRoute.params.subscribe((paramsId) => {
       this.paramId = paramsId.id;
     });
@@ -67,6 +73,16 @@ export class ProductsComponent implements OnInit {
       this.noti.create('error', 'LỖI', data.message)
       this.socket.disconnect();
     })
+  }
+
+  //check Room Master
+  checkRoomMaster() {
+    const authCookie = getCookie('AUTH_JIRA')
+    if (authCookie) {
+      if (this.res.room_master === JSON.parse(authCookie).id) {
+        this.roomMaster = true;
+      }
+    }
   }
 
   handleEmitMessage(msg: any) {
@@ -107,7 +123,9 @@ export class ProductsComponent implements OnInit {
     const listProduct = this.http.get(`tables/${this.paramId}`);
     listProduct.subscribe((res) => {
       this.res = res.data;
+      this.listUser = JSON.parse(res.data.list_user);
       this.handleData(res.data.products);
+      this.checkRoomMaster();
     });
   }
 
