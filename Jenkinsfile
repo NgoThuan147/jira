@@ -4,7 +4,7 @@ pipeline{
     stages {        
         stage('Install Dependencies'){
             steps {
-                sh 'npm install'
+                sh 'npm install --package-lock-only'
             }
         }
         stage('Build'){
